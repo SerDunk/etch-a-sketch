@@ -1,18 +1,42 @@
-const drawSpace=document.querySelector('.container');
-const drawArea=500*500;
-let sketchBoard=324;
-let tileSize=Math.sqrt(drawArea/sketchBoard);
-console.log(tileSize);
-tileSize=Math.round(tileSize);
-console.log(tileSize);
+const drawSpace=document.querySelector('.sketchpad');
+let userNumberTile=prompt('How many tiles per side?');
+if(userNumberTile>99 || userNumberTile<2){
+    alert('Please enter a number between 2 and 99');
+    userNumberTile=prompt('How many tiles per side?');
+}
+let tileSize=100/userNumberTile;
+numberOfTiles=userNumberTile*userNumberTile;
 function createDiv(numberOfTiles,tileSize){
 for(let i=0;i<numberOfTiles;i++){
     let div=document.createElement('div');
-    div.style.width=tileSize+'px';
-    div.style.height=tileSize+'px';
+    div.style.width=tileSize+'%';
+    div.style.height=tileSize+'%';
     div.classList.add('tile');
     drawSpace.appendChild(div);
 }
 }
 
-createDiv(sketchBoard,tileSize);
+createDiv(numberOfTiles,tileSize);
+const tiles=document.querySelectorAll('.tile');
+function hoverEffect(){
+    tiles.forEach(tile=>{
+        tile.addEventListener('mouseover',()=>{
+            tile.style.backgroundColor='black';
+        })
+    })
+}
+hoverEffect();
+
+function clear(){
+    const clearButton=document.querySelector('.btn-custom');
+    clearButton.addEventListener('click',()=>{
+        tiles.forEach(tile=>{
+            tile.style.backgroundColor='beige';
+        })
+    })
+}
+clear();
+
+
+
+
