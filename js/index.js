@@ -1,5 +1,10 @@
 const drawSpace=document.querySelector('.sketchpad');
 const slider=document.querySelector('.slider');
+const sliderVal=document.querySelector('.sliderValue');
+
+
+
+const COLORS=16777215;
 let userNumberTile;
 let tileSize;
 let numberOfTiles;
@@ -17,23 +22,23 @@ function createDiv(numTile,sizeTile){
 }
 
 
-const tiles=document.querySelectorAll('.tile');
-function hoverEffect(){
-    tiles.forEach(tile=>{
-        tile.addEventListener('mouseover',()=>{
-            tile.style.backgroundColor='black';
-        })
-    })
+
+function hoverEffect() {
+    
+    drawSpace.addEventListener('mouseover', function(event){
+        if (event.target.classList.contains('tile')) {
+            event.target.style.backgroundColor = 'black';
+        }
+    });
 }
 
 
+
 function clear(){
-    const clearButton=document.querySelector('.btn-custom');
-    clearButton.addEventListener('click',()=>{
-        tiles.forEach(tile=>{
-            tile.style.backgroundColor='beige';
+    const tiles=document.querySelectorAll('.tile');
+    tiles.forEach(tile=>{
+        tile.style.backgroundColor='beige';
         })
-    })
 }
 
 
@@ -41,10 +46,25 @@ slider.addEventListener("input", function(event) {
     userNumberTile= event.target.value;
     tileSize=100/userNumberTile;
     numberOfTiles=userNumberTile*userNumberTile;
+    sliderVal.innerHTML=userNumberTile;
     createDiv(numberOfTiles,tileSize);
     hoverEffect();
-    clear();
+    rainbowButton.addEventListener('click',rainbow);
   });
+
+function rainbow(){
+    let randomColor=Math.floor(Math.random()*COLORS).toString(16);
+    
+    drawSpace.addEventListener('mousemove',function(event){
+        if(event.target.classList.contains('tile')){
+            event.target.style.backgroundColor='#'+randomColor;
+        }
+    })
+}
+
+const clearButton=document.querySelector('.btn-custom')
+const rainbowButton=document.querySelector('.btn-rainbow')
+clearButton.addEventListener('click',clear);
 
 
 
